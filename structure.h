@@ -1,36 +1,41 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+
+#define SCORE_SIZE 8
+#define CELLS_SIZE 3
 
 struct FIELD // Поле
 {
-    char fieldCells[3][3];  // Клеточки внутри поля
-    char fieldAxisScore[8]; // Счет на "осях" (локальный)
+    char fieldCells[CELLS_SIZE][CELLS_SIZE];  // Клеточки внутри поля
+    char fieldAxisScore[SCORE_SIZE]; // Счет на "осях" (локальный)
 
-    // void (*UpdateFieldScore)(const struct FIELD*);
+    void (*FUpdateFieldScore)(struct FIELD*);
 };
+
+void FUpdateFieldScore(struct FIELD*);
 
 void FInit(struct FIELD* field)
 {
-    for (int i = 0; i < 9; i++) // Обнуляем поле
-        (*field->fieldCells)[i] = 0;
+    memset(*field->fieldCells, 0, CELLS_SIZE * CELLS_SIZE); // Обнуляем поле
+    memset(*field->fieldAxisScore, 0, SCORE_SIZE); // Обнуляем счет
 
-    for (int i = 0; i < 8; i++) // Обнуляем счет
-        field->fieldAxisScore[i] = 0;
+    field->FUpdateFieldScore = FUpdateFieldScore; // Указатель на функцию апдейта счета
 }
+
+// ОБЕРНУТЬ В DEFINE
 
 void FUpdateFieldScore(struct FIELD* field) // Обновляет счет всего поля
 {
-    // char* cells = field->fieldCells;
     char* score = field->fieldAxisScore;
 
-    for (int i = 0; i < 8; i++) // Обнуляем счет
-        score[i] = 0;
+    memset(*field->fieldAxisScore, 0, SCORE_SIZE); // Обнуляем счет
 
     // Обновляем строчки и столбцы
-    for (int i = 0; i < 3; i++) 
+    for (int i = 0; i < CELLS_SIZE; i++) 
     {
         int sum = 0;
-        for (int j = 0; j < 3; j++)
+        for (int j = 0; j < CELLS_SIZE; j++)
         {
             score[i] += field->fieldCells[i][j]; // Если крестик - плюсуем, иначе - минусуем
             score[6 - j] += field->fieldCells[i][j];
@@ -38,11 +43,11 @@ void FUpdateFieldScore(struct FIELD* field) // Обновляет счет вс�
     }
 
     // Обновляем диагонали
-    int j = 3;
-    for (int i = 0; i < 3; i++)
+    int j = CELLS_SIZE;
+    for (int i = 0; i < CELLS_SIZE; i++)
     {
-        score[3] += field->fieldCells[i][i];
-        score[7] += field->fieldCells[j][j];
+        score[CELLS_SIZE] += field->fieldCells[i][i];
+        score[CELLS_SIZE*CELLS_SIZE - 2] += field->fieldCells[j][j];
         j--;
     }
     
@@ -51,9 +56,9 @@ void FUpdateFieldScore(struct FIELD* field) // Обновляет счет вс�
 void FDebugOutput(struct FIELD* field) // Выводит счет и поле
 {
     // Вывод поля
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < CELLS_SIZE; i++)
     {
-        for (int j = 0; j < 3; j++)
+        for (int j = 0; j < CELLS_SIZE; j++)
         {
             printf("%d\t", field->fieldCells[i][j]);
         }
@@ -61,7 +66,7 @@ void FDebugOutput(struct FIELD* field) // Выводит счет и поле
     }
 
     // Вывод счета    
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < CELLS_SIZE; i++)
     {
         printf("%d ", field->fieldAxisScore[i]);
     }
