@@ -23,8 +23,6 @@ void FInit(struct FIELD* field)
     field->FUpdateFieldScore = FUpdateFieldScore; // Указатель на функцию апдейта счета
 }
 
-// ОБЕРНУТЬ В DEFINE
-
 void FUpdateFieldScore(struct FIELD* field) // Обновляет счет всего поля
 {
     char* score = field->fieldAxisScore;
