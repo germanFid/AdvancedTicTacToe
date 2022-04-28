@@ -4,6 +4,11 @@
 
 #define SCORE_SIZE 8
 #define CELLS_SIZE 3
+#define MAP_SIZE 3
+
+/*
+* STRUCT FIELD
+*/
 
 struct FIELD // Поле
 {
@@ -18,7 +23,7 @@ void FUpdateFieldScore(struct FIELD*);
 void FInit(struct FIELD* field)
 {
     memset(*field->fieldCells, 0, CELLS_SIZE * CELLS_SIZE); // Обнуляем поле
-    memset(*field->fieldAxisScore, 0, SCORE_SIZE); // Обнуляем счет
+    memset(field->fieldAxisScore, 0, SCORE_SIZE); // Обнуляем счет
 
     field->FUpdateFieldScore = FUpdateFieldScore; // Указатель на функцию апдейта счета
 }
@@ -27,7 +32,7 @@ void FUpdateFieldScore(struct FIELD* field) // Обновляет счет вс�
 {
     char* score = field->fieldAxisScore;
 
-    memset(*field->fieldAxisScore, 0, SCORE_SIZE); // Обнуляем счет
+    memset(field->fieldAxisScore, 0, SCORE_SIZE); // Обнуляем счет
 
     // Обновляем строчки и столбцы
     for (int i = 0; i < CELLS_SIZE; i++) 
@@ -71,6 +76,59 @@ void FDebugOutput(struct FIELD* field) // Выводит счет и поле
     printf("\n");
 }
 
+/*
+* STRUCT MAP
+*/
+
 struct MAP // Карта
 {
+    struct FIELD FMap[MAP_SIZE][MAP_SIZE];
 };
+
+void MInit(struct MAP* map)
+{
+    for (int i = 0; i < MAP_SIZE; i++)
+    {
+        for (int j = 0; j < MAP_SIZE; j++)
+        {
+            FInit(&(map->FMap[i][j]));
+        }
+        
+    }
+}
+
+void MDebugOutput(struct MAP* map)
+{
+    for (int i = 0; i < MAP_SIZE; i++)
+    {
+        for (int j = 0; j < MAP_SIZE; j++)
+        {
+            FDebugOutput(&(map->FMap[i][j]));
+        }
+    }
+}
+
+/*
+* STRUCT GAME
+*/
+
+struct GAME
+{
+    // info
+    char player1Name[10];
+    char player2Name[10];
+    char turn : 1; // 0 - o ; 1 - x
+
+    // fields
+    struct MAP gameMap;
+};
+
+void GInit(struct GAME* game, char* p1Name, char* p2Name)
+{
+    MInit(&(game->gameMap));
+
+    strcpy(game->player1Name, p1Name);
+    strcpy(game->player2Name, p2Name);
+
+    game->turn = 1; // Первыми ходят крестики
+}
