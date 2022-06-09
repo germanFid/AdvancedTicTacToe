@@ -56,9 +56,13 @@ int main()
 
     // glViewport(0, 0, width, height);
 
+    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     while(!glfwWindowShouldClose(window))
     {
         glfwPollEvents(); // Check for events (e.g. mouse click or moving / keyboard input)
+
+        // glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
 
         glfwSwapBuffers(window);
     }
