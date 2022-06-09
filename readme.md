@@ -1,5 +1,11 @@
 # Graphics
 
-```gcc graphics_test.c -lglfw```
+Windows:
 
-glClear is deprecated!
+```gcc graphics_test.c -lglfw -lGLEW```
+
+OSX compilation:
+
+```clang -lglfw -framework CoreVideo -framework OpenGL -framework IOKit -framework Cocoa -framework Carbon```
+
+**glClear is deprecated!**
