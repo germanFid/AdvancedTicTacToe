@@ -9,6 +9,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "input.h"
+
 int main()
 {
     #ifdef _WIN32
@@ -46,6 +48,7 @@ int main()
         exit(EXIT_FAILURE);
     }
 
+    glfwSetKeyCallback(window, key_callback);
     glfwMakeContextCurrent(window);
 
     int width, height;
