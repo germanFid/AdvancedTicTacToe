@@ -1,23 +1,17 @@
-#ifdef __APPLE__
-/* Defined before OpenGL and GLUT includes to avoid deprecation messages */
-#define GL_SILENCE_DEPRECATION
-#endif
-
-
 #include "glUI.h"
 
-void resize(int width, int height) 
+void resize(int width, int height)
 {
     glutReshapeWindow(WINDOW_WIDTH, WINDOW_HEIGHT);
 }
 
-void renderScene(void) 
+void renderScene(void)
 {
     glClearColor(1, 1, 1, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
- 
+
 	glColor3f(0.43, 0.17, 0.64);
-	
+
 	switch (ScreenState)
 	{
 		case STATE_MAIN_MENU:
@@ -39,7 +33,7 @@ void renderScene(void)
 		case STATE_SETTINGS:
 			DrawSettings();
 			break;
-	
+
 		default:
 			break;
 	}
@@ -48,7 +42,7 @@ void renderScene(void)
 	{
 		drawMenu(MButtons);
 	}
- 
+
     glutSwapBuffers();
 }
 
@@ -59,7 +53,7 @@ void mousePressed(int button, int state, int x, int y)
 
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 	{
-		printf("%f %f\n", xClip, yClip);	
+		printf("%f %f\n", xClip, yClip);
 
 		switch (ScreenState)
 		{
@@ -70,7 +64,7 @@ void mousePressed(int button, int state, int x, int y)
 		case STATE_SETTINGS:
 			settingsClickHandler(xClip, yClip);
 			break;
-		
+
 		default:
 			break;
 		}
@@ -86,11 +80,24 @@ void keyboardPressed(unsigned char key, int x, int y)
 
 	printf("KEY: %d\n", key);
 
-	if (ScreenState == GAME_2P)
+	if (key == 32) // if spacebar
 	{
-		if (key == 32) // if spacebar
+		if (ScreenState == GAME_2P)
 		{
 			GMakeMove(&game, game.mapSelX, game.mapSelY, game.fieldSelX, game.fieldSelY, game.turn);
+		}
+
+		else if (ScreenState == GAME_AI)
+		{
+			if (game.turn == SettingFirst) // don't let the player to make turn if it's AI turn
+			{
+				GMakeMove(&game, game.mapSelX, game.mapSelY, game.fieldSelX, game.fieldSelY, game.turn);
+			}
+
+			else
+			{
+				AIMakeMove(&game);
+			}
 		}
 	}
 }

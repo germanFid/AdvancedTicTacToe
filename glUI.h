@@ -6,6 +6,7 @@
 
 #include "glConfig.h"
 #include "structure.h"
+#include "ai.h"
 
 #define BUTTON_OFFSET 0.1f
 #define BUTTON_NUM 5

@@ -20,6 +20,8 @@
 #define DIRECTION_RIGHT 2
 #define DIRECTION_LEFT 3
 
+#define GENERAL_FAIL -1
+
 enum _settingFirst {FIRST_CROSS = 1, FIRST_NOUGHTS = -1} SettingFirst;
 enum _settingDifLevel {EASY, MEDIUM, HARD, SUPERHARD} SettingDifLevel;
 
@@ -321,48 +323,6 @@ void GameSel(struct GAME* game, int direction)
         break;
     }
 }
-
-// int minimaxHandler(struct GAME* game, int turn, int maxDepth)
-// {
-//     struct GAME game_copy = *game;
-// }
-
-// int miniMaxField(struct FIELD field, int turn, int maxDepth, int curDepth) // default curdepth = 1
-// {
-//     if (curDepth > maxDepth)
-//     {
-//         return 0;
-//     }
-
-//     int maxX = -1;
-//     int maxY = -1;
-//     int maxVal = 0;
-
-//     int minX = -1;
-//     int minY = -1;
-//     int minVal = 999;
-
-//     for (int i = 0; i < MAP_SIZE; i++)
-//     {
-//         for (int j = 0; j < MAP_SIZE; j++)
-//         {
-//             if (field.fieldCells[i][j] == 0)
-//             {
-//                 struct Field newField = field;
-//                 newField.fieldCells[i][j] = turn;
-//                 FUpdateFieldScore(&newField);
-//                 newField.winner = FCheckFieldWin(&newField);
-
-//                 if (newField.winner)
-//                 {
-//                     return newField.winner;
-//                 }
-                
-//                 int result = miniMaxField(newField, turn*(-1), maxDepth, curDepth);
-//             }
-//         }
-//     }
-// }
 
 int GMakeMove(struct GAME*, int, int, int, int, int);
 
