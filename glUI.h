@@ -361,7 +361,7 @@ void settingsClickHandler(float x, float y)
             {
             case EASY:
                 AI_NAIVE_MODE = AI_NAIVE;
-                AI_DEPTH = AI_DEPTH_MEDIUM;
+                AI_DEPTH = AI_DEPTH_EASY;
                 break;
 
             case MEDIUM:
@@ -382,6 +382,8 @@ void settingsClickHandler(float x, float y)
             default:
                 break;
             }
+
+            printf("Difficulity: %d\n NAIVE_MODE: %d\n", AI_DEPTH, AI_NAIVE_MODE);
         }
     }
 }

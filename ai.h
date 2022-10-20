@@ -7,7 +7,7 @@
 int AI_NAIVE_MODE = AI_NAIVE; // switches 'naive mode'
 
 #define AI_DEPTH_EASY 3
-#define AI_DEPTH_MEDIUM 3
+#define AI_DEPTH_MEDIUM 5
 #define AI_DEPTH_HARD 5
 #define AI_DEPTH_SUPERHARD 9
 int AI_DEPTH = 3;
