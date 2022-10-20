@@ -4,7 +4,7 @@
 
 #define AI_NAIVE 1
 #define AI_NOT_NAIVE 0
-int AI_NAIVE_MODE = ; // switches 'naive mode'
+int AI_NAIVE_MODE = AI_NAIVE; // switches 'naive mode'
 
 #define AI_DEPTH_EASY 3
 #define AI_DEPTH_MEDIUM 3
@@ -132,7 +132,7 @@ int miniMaxField(struct FIELD field, int turn, int maxDepth, int curDepth, int* 
         }
     }
 
-    if (!NAIVE_MODE)
+    if (!AI_NAIVE_MODE)
     {
         if (FCheckFieldDraw(&field) && FCheckFieldWin(&field) == 0)
         {
@@ -143,13 +143,18 @@ int miniMaxField(struct FIELD field, int turn, int maxDepth, int curDepth, int* 
     return peakScore;
 }
 
+int AIMapToField(struct MAP* map)
+{
+
+}
+
 int AIMakeMove(struct GAME* game)
 {
     if (game->locked)
     {
         int retX, retY;
         miniMaxField(game->gameMap.FMap[game->lockedX][game->lockedY], 
-                     game->turn, AI_DEPTH, &retX, &retY);
+                     game->turn, AI_DEPTH, 1, &retX, &retY);
         GMakeMove(game, game->lockedX, game->lockedY, retX, retY, game->turn);
     }
 
