@@ -139,7 +139,10 @@ int main(int argc, char **argv)
 	ScreenState = STATE_MAIN_MENU;
 
 	SettingFirst = FIRST_CROSS;
-	SettingDifLevel = EASY;
+	SettingDifLevel = MEDIUM;
+	AI_DEPTH = AI_DEPTH_MEDIUM;
+	AI_NAIVE_MODE = AI_NAIVE;
+	
 	initMenuButton(0.6, 0.95, 0.0, 0.85, &moveBtn);
 	initMenuButton(0.6, 0.8, 0.0, 0.7, &difBtn);
 

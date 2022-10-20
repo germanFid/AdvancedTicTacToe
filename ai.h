@@ -2,6 +2,16 @@
 
 // #define AI_DEBUG
 
+#define AI_NAIVE 1
+#define AI_NOT_NAIVE 0
+int AI_NAIVE_MODE = ; // switches 'naive mode'
+
+#define AI_DEPTH_EASY 3
+#define AI_DEPTH_MEDIUM 3
+#define AI_DEPTH_HARD 5
+#define AI_DEPTH_SUPERHARD 9
+int AI_DEPTH = 3;
+
 int miniMaxHandler(struct GAME* game, int turn, int maxDepth)
 {
     struct GAME game_copy = *game;
@@ -122,9 +132,12 @@ int miniMaxField(struct FIELD field, int turn, int maxDepth, int curDepth, int* 
         }
     }
 
-    if (FCheckFieldDraw(&field) && FCheckFieldWin(&field) == 0)
+    if (!NAIVE_MODE)
     {
-        return 0;
+        if (FCheckFieldDraw(&field) && FCheckFieldWin(&field) == 0)
+        {
+            return 0;
+        }
     }
     
     return peakScore;
@@ -136,7 +149,7 @@ int AIMakeMove(struct GAME* game)
     {
         int retX, retY;
         miniMaxField(game->gameMap.FMap[game->lockedX][game->lockedY], 
-                     game->turn, 9, 1, &retX, &retY);
+                     game->turn, AI_DEPTH, &retX, &retY);
         GMakeMove(game, game->lockedX, game->lockedY, retX, retY, game->turn);
     }
 

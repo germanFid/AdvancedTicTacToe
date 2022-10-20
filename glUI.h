@@ -356,6 +356,32 @@ void settingsClickHandler(float x, float y)
             {
                 SettingDifLevel = EASY;
             }
+
+            switch (SettingDifLevel)
+            {
+            case EASY:
+                AI_NAIVE_MODE = AI_NAIVE;
+                AI_DEPTH = AI_DEPTH_MEDIUM;
+                break;
+
+            case MEDIUM:
+                AI_NAIVE_MODE = AI_NAIVE;
+                AI_DEPTH = AI_DEPTH_MEDIUM;
+                break;
+
+            case HARD:
+                AI_NAIVE_MODE = AI_NOT_NAIVE;
+                AI_DEPTH = AI_DEPTH_HARD;
+                break;
+
+            case SUPERHARD:
+                AI_NAIVE_MODE = AI_NOT_NAIVE;
+                AI_DEPTH = AI_DEPTH_SUPERHARD;
+                break;
+            
+            default:
+                break;
+            }
         }
     }
 }
