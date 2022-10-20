@@ -1,6 +1,6 @@
 #include "ai.h"
 
-#define TEST_N 4
+#define TEST_N 1
 
 int main()
 {
@@ -12,7 +12,7 @@ int main()
     {
         testField.fieldCells[0][0] = TURNO;
         testField.fieldCells[0][2] = TURNX;
-        testField.fieldCells[1][0] = TURNX;
+        // testField.fieldCells[1][0] = TURNX;
         testField.fieldCells[2][0] = TURNX;
         testField.fieldCells[2][1] = TURNO;
         testField.fieldCells[2][2] = TURNO;
@@ -38,11 +38,12 @@ int main()
     {
         testField.fieldCells[0][0] = TURNX;
         testField.fieldCells[2][0] = TURNX;
-        testField.fieldCells[1][1] = TURNX;
+        testField.fieldCells[1][1] = TURNO;
         // testField.fieldCells[1][2] = TURNO;
     }
 
-    int res = miniMaxField(testField, TURNO, 3, 1, NULL, NULL);
+    int resX, resY;
+    int res = miniMaxField(testField, TURNX, 9, 1, &resX, &resY);
 
-    printf(">> %d\n", res);
+    printf(">> %d : %d %d\n", res, resX,  resY);
 }

@@ -1,1 +1,3 @@
-gcc test.c && ./a.out >> result
+gcc test.c && ./a.out > result
+nano result
+

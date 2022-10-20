@@ -1,1 +1,3 @@
-gcc test.c && ./a.out >> result
+gcc main.c -o main.out -lGL -lGLU -lglut -lm
+./main.out
+
