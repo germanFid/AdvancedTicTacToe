@@ -143,15 +143,32 @@ int miniMaxField(struct FIELD field, int turn, int maxDepth, int curDepth, int* 
     return peakScore;
 }
 
-int AIMapToField(struct MAP* map)
+int AIMapToField(struct MAP* map, struct FIELD* field)
 {
-
+    FInit(field);
+    for (int i = 0; i < MAP_SIZE; i++)
+    {
+        for (int j = 0; j < MAP_SIZE; j++)
+        {
+            int winner = map->FMap[i][j].winner;
+            if (FCheckFieldDraw(&map->FMap[i][j]))
+            {
+                winner = SettingFirst;
+            }
+            if(winner != 0)
+            {
+                field->fieldCells[i][j] = winner;
+            }
+        }
+    }
+    
 }
 
 int AIMakeMove(struct GAME* game)
 {
     if (game->locked)
     {
+        printf("====== GAME IS LOCKED!\n");
         int retX, retY;
         miniMaxField(game->gameMap.FMap[game->lockedX][game->lockedY], 
                      game->turn, AI_DEPTH, 1, &retX, &retY);
@@ -160,7 +177,19 @@ int AIMakeMove(struct GAME* game)
 
     else
     {
-        printf("TBD!\n");
+        printf("====== GAME IS UNLOCKED!\n");
+        struct FIELD fld;
+        AIMapToField(&game->gameMap, &fld);
+
+        int mretX, mretY;
+        miniMaxField(fld, game->turn, AI_DEPTH, 1, &mretX, &mretY);
+
+        printf("====== MAP: %d %d\n", mretX, mretX);
+        int retX, retY;
+        miniMaxField(game->gameMap.FMap[mretX][mretY], game->turn, AI_DEPTH, 1, &retX, &retY);
+        printf("====== FIELD: %d %d\n", retX, retY);
+        GMakeMove(game, mretX, mretY, retX, retY, game->turn);
+
         return EXIT_FAILURE;
     }
 }

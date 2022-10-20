@@ -92,11 +92,10 @@ void keyboardPressed(unsigned char key, int x, int y)
 			if (game.turn == SettingFirst) // don't let the player to make turn if it's AI turn
 			{
 				GMakeMove(&game, game.mapSelX, game.mapSelY, game.fieldSelX, game.fieldSelY, game.turn);
-			}
-
-			else
-			{
-				AIMakeMove(&game);
+				if (game.turn != SettingFirst)
+				{
+					AIMakeMove(&game);
+				}
 			}
 		}
 	}
