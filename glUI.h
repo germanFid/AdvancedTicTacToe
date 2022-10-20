@@ -112,10 +112,19 @@ int mainMenuClickHandler(float x, float y)
             if (x > MButtons[i].bottomLeft.x && y > MButtons[i].bottomLeft.y)
             {
                 resultButton = i;
-                if (resultButton == STATE_PLAY || resultButton == STATE_PLAY_AI)
+
+                if (resultButton == STATE_PLAY)
                 {
                     GInit(&game);
-                    // GMakeMove(&game, 1, 1, 1, 1, TURNX);
+                }
+                
+                if (resultButton == STATE_PLAY_AI)
+                {
+                    GInit(&game);
+                    if (SettingAIFirst == AI_FIRST)
+                    {
+                        AIMakeMove(&game);
+                    }
                 }
                 break;
             }
@@ -318,7 +327,7 @@ void drawGame(int ai)
 
         else
         {
-            drawstring(-0.4f, 0.1f, "Nought Wins! Press ESC to exit");
+            drawstring(-0.4f, 0.1f, "Nought Wins!");
             drawstring(-0.4f, -0.1f, "Press ESC to exit!");
         }
     }
@@ -326,6 +335,7 @@ void drawGame(int ai)
 
 struct MenuButton moveBtn;
 struct MenuButton difBtn;
+struct MenuButton firstBtn;
 
 void DrawSettings()
 {
@@ -335,6 +345,9 @@ void DrawSettings()
 
     drawstring(-0.9, 0.7, "Difficulty:");
     drawMenuButton(&difBtn, difStrings[SettingDifLevel]);
+
+    drawstring(-0.9, 0.5, "AI FIRST?:"); // ((SettingAIFirst == AI_FIRST) ? "AI FIRST" : "AI SECOND")
+    drawMenuButton(&firstBtn, ((SettingAIFirst == AI_FIRST) ? "AI FIRST" : "AI SECOND"));
 }
 
 void settingsClickHandler(float x, float y)
@@ -384,6 +397,18 @@ void settingsClickHandler(float x, float y)
             }
 
             printf("Difficulity: %d\n NAIVE_MODE: %d\n", AI_DEPTH, AI_NAIVE_MODE);
+        }
+    }
+
+    if (x < firstBtn.topRight.x && y < firstBtn.topRight.y)
+    {
+        if (x > firstBtn.bottomLeft.x && y > firstBtn.bottomLeft.y)
+        {
+            SettingAIFirst++;
+            if(SettingAIFirst > AI_SECOND)
+            {
+                SettingAIFirst = AI_FIRST;
+            }
         }
     }
 }

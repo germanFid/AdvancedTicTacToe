@@ -89,13 +89,18 @@ void keyboardPressed(unsigned char key, int x, int y)
 
 		else if (ScreenState == GAME_AI)
 		{
-			if (game.turn == SettingFirst) // don't let the player to make turn if it's AI turn
+			if ((game.turn == SettingFirst && SettingAIFirst == AI_SECOND) || (game.turn  != SettingFirst && SettingAIFirst == AI_FIRST)) // don't let the player to make turn if it's AI turn
 			{
 				GMakeMove(&game, game.mapSelX, game.mapSelY, game.fieldSelX, game.fieldSelY, game.turn);
-				if (game.turn != SettingFirst)
+				if ((game.turn == SettingFirst && SettingAIFirst == AI_FIRST) || (game.turn != SettingFirst && SettingAIFirst == AI_SECOND))
 				{
 					AIMakeMove(&game);
 				}
+			}
+
+			else
+			{
+				printf("NOPE!\n");
 			}
 		}
 	}
@@ -139,11 +144,13 @@ int main(int argc, char **argv)
 
 	SettingFirst = FIRST_CROSS;
 	SettingDifLevel = MEDIUM;
+	SettingAIFirst = AI_SECOND;
 	AI_DEPTH = AI_DEPTH_MEDIUM;
 	AI_NAIVE_MODE = AI_NAIVE;
 	
 	initMenuButton(0.6, 0.95, 0.0, 0.85, &moveBtn);
 	initMenuButton(0.6, 0.8, 0.0, 0.7, &difBtn);
+	initMenuButton(0.6, 0.65, 0.0, 0.55, &firstBtn);
 
 	// инициализация
 	glutInit(&argc, argv);

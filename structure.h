@@ -24,6 +24,7 @@
 
 enum _settingFirst {FIRST_CROSS = 1, FIRST_NOUGHTS = -1} SettingFirst;
 enum _settingDifLevel {EASY, MEDIUM, HARD, SUPERHARD} SettingDifLevel;
+enum _settingAIFirst {AI_FIRST, AI_SECOND} SettingAIFirst;
 
 enum turns
 {
