@@ -21,9 +21,9 @@ char menuButtons[][30] = {"Play", "Play with AI","Leaderboards", "Settings", "Ab
 #define ABOUT_LEN 200
 char* About = "\n \nAdvanced Tic Tac Toe\nAuthor: German Fidarov\n4831001/10003\nSt. Petersburg\nPolytechnic University\n \nInstitute of Cybersecurity \nand Information Protection\n \n2022\n \nPreess ESC to return to main menu";
 
-#define DIFLEN 11
+#define DIFLEN 18
 #define DIFNUM 4
-char difStrings[DIFNUM][DIFLEN] = {"Easy", "Medium", "Hard", "Super Hard"};
+char difStrings[DIFNUM][DIFLEN] = {"Noob", "Too easy", "OK,it's better", "You can't do it"};
 
 struct GAME game;
 
@@ -87,7 +87,7 @@ void drawMenuButton(struct MenuButton* btn, char* str)
 void drawMenu(struct MenuButton* btn)
 {
     glColor3f(0.43, 0.17, 0.64);
-    drawstring(-0.5f, 1.0f - BUTTON_OFFSET * 2, "Advanced Tic Tac Toe");
+    drawstring(-0.5f, 1.0f - BUTTON_OFFSET * 2, "tic-tac-toe on an endless field");
 
     float curHeight = 1.0f - BUTTON_OFFSET * 3.5;
     float btnHeight = (1.0f - BUTTON_OFFSET * BUTTON_NUM) / (BUTTON_NUM / 2) - BUTTON_OFFSET/2;

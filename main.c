@@ -46,6 +46,11 @@ void renderScene(void)
     glutSwapBuffers();
 }
 
+void idle() 
+{
+	glutPostRedisplay(); 
+}
+
 void mousePressed(int button, int state, int x, int y)
 {
 	float xClip = ((x + 0.5f) / WINDOW_WIDTH) * 2.0f - 1.0f;
@@ -69,6 +74,8 @@ void mousePressed(int button, int state, int x, int y)
 			break;
 		}
 	}
+	glutIdleFunc(idle);
+	glutMainLoop();
 }
 
 void keyboardPressed(unsigned char key, int x, int y)
@@ -103,6 +110,9 @@ void keyboardPressed(unsigned char key, int x, int y)
 				printf("NOPE!\n");
 			}
 		}
+
+		glutIdleFunc(idle);
+		glutMainLoop(); 
 	}
 }
 
@@ -157,6 +167,7 @@ int main(int argc, char **argv)
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
 	glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 	glutCreateWindow("Advanced Tic Tac Toe");
+	glutIdleFunc(idle);
 
 	glutMouseFunc(mousePressed);
 	glutKeyboardFunc(keyboardPressed);
